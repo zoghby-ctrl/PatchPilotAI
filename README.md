@@ -1,20 +1,34 @@
+---
+title: PatchPilot AI
+emoji: 🛠️
+colorFrom: blue
+colorTo: purple
+sdk: streamlit
+app_file: app.py
+pinned: false
+license: mit
+---
+
 # PatchPilot AI
 
-PatchPilot AI is an agentic debugging copilot for C++ game engine and multiplayer/networking developers.
+PatchPilot AI is a generic agentic code review, debugging, and improvement copilot for tough complex code and simple everyday scripts.
 
-It analyzes uploaded C++ files, detects likely bugs, finds performance and networking risks, suggests fixes, and generates a practical test plan.
+It supports C++, Java, JavaScript, Python, and C# source files. The app analyzes code, detects bug risks, security issues, performance bottlenecks, complexity problems, and generates actionable fix recommendations plus practical test plans.
 
 ## Features
 
-- Upload `.cpp`, `.h`, `.hpp`, `.txt`, `.md` files
-- Multi-agent review pipeline:
-  - Bug Hunter Agent
-  - Networking Agent
-  - Performance Agent
+- Upload C++, Java, JavaScript, Python, C#, text, or markdown files
+- Multi-agent workflow:
+  - Language & Structure Agent
+  - Bug & Correctness Agent
+  - Security Agent
+  - Performance & Complexity Agent
+  - Refactor Agent
   - Test Planner Agent
   - Executive Summary Agent
-- Works without API keys using a deterministic fallback analyzer
-- Optional LLM endpoint support through OpenAI-compatible APIs
+- Works without API keys using deterministic rule-based analysis
+- Optional OpenAI-compatible model support for deeper review
+- Designed for GPT-5.5 / GPT-5.4 / GPT-5 family style coding models through API keys
 - Streamlit UI for local demo or Hugging Face Spaces
 
 ## Run locally
@@ -24,21 +38,28 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-## Optional LLM endpoint
+## Optional OpenAI model mode
+
+Set these as environment variables or enter them in the app sidebar:
 
 ```bash
-export PATCHPILOT_LLM_BASE_URL="http://localhost:8000/v1"
-export PATCHPILOT_LLM_API_KEY="EMPTY"
-export PATCHPILOT_LLM_MODEL="Qwen/Qwen2.5-Coder-7B-Instruct"
+OPENAI_API_KEY=<your_key>
+PATCHPILOT_MODEL=gpt-5.5
 ```
 
-## AMD Developer Cloud angle
+The app calls the OpenAI-compatible Chat Completions endpoint. If no API key is provided, PatchPilot still runs with the deterministic fallback analyzer.
 
-PatchPilot can connect to an OpenAI-compatible coding model served on AMD Developer Cloud using ROCm/vLLM. This allows the multi-agent workflow to run stronger model-powered code review while keeping the app interface simple.
+## AMD Developer Hackathon relevance
 
-## Hackathon pitch
+PatchPilot AI fits the AI Agents & Agentic Workflows track. It uses multiple specialized code-review agents to automate a real developer workflow.
 
-PatchPilot AI helps C++ game and engine developers catch multiplayer defects before release. It uses multiple specialized agents to convert source code into structured bug reports, networking risk analysis, performance recommendations, and test plans.
+For AMD Developer Cloud integration, the same app can point to an OpenAI-compatible endpoint hosted on AMD GPU infrastructure using ROCm/vLLM:
+
+```bash
+PATCHPILOT_LLM_BASE_URL=<AMD-hosted-endpoint>/v1
+PATCHPILOT_LLM_API_KEY=<key>
+PATCHPILOT_MODEL=<model-name>
+```
 
 ## License
 
